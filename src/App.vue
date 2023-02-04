@@ -46,7 +46,7 @@ export default {
   async mounted() {
     try {
       await this.pokemon.getPokemon(
-        "https://pokeapi.co/api/v2/pokemon?limit=1000"
+        "https://pokeapi.co/api/v2/pokemon?limit=8"
       );
     } catch (error) {
       console.log(error);
