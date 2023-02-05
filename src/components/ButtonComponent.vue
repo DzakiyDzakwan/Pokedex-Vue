@@ -11,6 +11,7 @@
 export default {
   name: "ButtonComponent",
   props: ["label", "addClass"],
+  emits: ["click"],
   setup() {
     return {};
   },
