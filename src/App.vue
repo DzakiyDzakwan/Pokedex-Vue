@@ -4,17 +4,23 @@
     <div class="grid grid-cols-12 gap-4 w-fit mx-auto">
       <template v-for="item in pokemon.pokemons" :key="item.id">
         <AsyncCard :pokemon="item" />
-        <!-- <CardLoadingComponent /> -->
       </template>
     </div>
+  </div>
+  <div class="container my-8">
+    <ButtonComponent
+      label="Load More"
+      addClass="mx-auto"
+      @click="pokemon.getPokemon(pokemon.nextUrl)"
+    />
   </div>
 </template>
 
 <script>
 import { usePokemonStore } from "@/stores/pokemon.js";
 import NavbarComponent from "@/components/NavbarComponent";
-// import CardComponent from "@/components/CardComponent";
 import CardLoadingComponent from "@/components/CardLoadingComponent";
+import ButtonComponent from "@/components/ButtonComponent";
 import { defineAsyncComponent } from "vue-demi";
 
 const AsyncCard = defineAsyncComponent({
@@ -31,6 +37,7 @@ export default {
   components: {
     NavbarComponent,
     AsyncCard,
+    ButtonComponent,
   },
   setup() {
     const pokemon = usePokemonStore();
@@ -39,8 +46,9 @@ export default {
     };
   },
   methods: {
-    changeName() {
-      this.pokemon.message = "Pokedex Application with Vue3";
+    loadPokemon() {
+      // this.pokemon.getPokemon(this.pokemon.nextUrl);
+      console.log("load");
     },
   },
   async mounted() {
@@ -51,6 +59,7 @@ export default {
     } catch (error) {
       console.log(error);
     }
+    console.log("mounted");
   },
 };
 </script>
