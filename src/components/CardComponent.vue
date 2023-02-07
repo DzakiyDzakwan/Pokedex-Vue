@@ -24,7 +24,11 @@
 
       <Transition name="slidein" v-show="hoverCard">
         <div class="absolute top-0 right-0 w-full h-full flex items-center">
-          <ButtonComponent label="See Detail" addClass="m-auto" />
+          <ButtonComponent
+            label="See Detail"
+            addClass="m-auto"
+            @click="$emit('openModal')"
+          />
         </div>
       </Transition>
     </div>
@@ -35,6 +39,7 @@ import ButtonComponent from "@/components/ButtonComponent";
 import { ref } from "vue-demi";
 export default {
   name: "CardComponent",
+  emits: ["openModal"],
   props: ["pokemon"],
   components: {
     ButtonComponent,

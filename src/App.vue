@@ -1,25 +1,28 @@
 <template>
   <NavbarComponent />
-  <div class="container my-8">
+  <div class="container pt-8 pb-4">
     <div class="grid grid-cols-12 gap-4 w-fit mx-auto">
       <template v-for="item in pokemon.pokemons" :key="item.id">
-        <AsyncCard :pokemon="item" />
+        <AsyncCard :pokemon="item" @openModal="modal.openModal(item)" />
       </template>
     </div>
   </div>
-  <div class="container my-8">
+  <div class="container pt-4 pb-8">
     <ButtonComponent
       label="Load More"
       addClass="mx-auto"
       @click="pokemon.getPokemon(pokemon.nextUrl)"
     />
   </div>
+  <ModalComponent @closeModal="modal.closeModal" />
 </template>
 
 <script>
 import { usePokemonStore } from "@/stores/pokemon.js";
+import { useModalStore } from "@/stores/modal.js";
 import NavbarComponent from "@/components/NavbarComponent";
 import CardLoadingComponent from "@/components/CardLoadingComponent";
+import ModalComponent from "@/components/ModalComponent";
 import ButtonComponent from "@/components/ButtonComponent";
 import { defineAsyncComponent } from "vue-demi";
 
@@ -38,17 +41,19 @@ export default {
     NavbarComponent,
     AsyncCard,
     ButtonComponent,
+    ModalComponent,
   },
   setup() {
+    const modal = useModalStore();
     const pokemon = usePokemonStore();
     return {
       pokemon,
+      modal,
     };
   },
   methods: {
-    loadPokemon() {
-      // this.pokemon.getPokemon(this.pokemon.nextUrl);
-      console.log("load");
+    testModal() {
+      console.log("modal");
     },
   },
   async mounted() {
