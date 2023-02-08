@@ -14,7 +14,7 @@
       @click="pokemon.getPokemon(pokemon.nextUrl)"
     />
   </div>
-  <ModalComponent @closeModal="modal.closeModal" />
+  <Modal @closeModal="modal.closeModal" />
 </template>
 
 <script>
@@ -22,7 +22,6 @@ import { usePokemonStore } from "@/stores/pokemon.js";
 import { useModalStore } from "@/stores/modal.js";
 import NavbarComponent from "@/components/NavbarComponent";
 import CardLoadingComponent from "@/components/CardLoadingComponent";
-import ModalComponent from "@/components/ModalComponent";
 import ButtonComponent from "@/components/ButtonComponent";
 import { defineAsyncComponent } from "vue-demi";
 
@@ -35,13 +34,20 @@ const AsyncCard = defineAsyncComponent({
   suspensible: false,
 });
 
+const Modal = defineAsyncComponent({
+  loader: () => import("@/components/ModalComponent"),
+  delay: 2000,
+  timeout: 5000,
+  suspensible: false,
+});
+
 export default {
   name: "App",
   components: {
     NavbarComponent,
     AsyncCard,
     ButtonComponent,
-    ModalComponent,
+    Modal,
   },
   setup() {
     const modal = useModalStore();

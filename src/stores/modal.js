@@ -4,10 +4,12 @@ import { ref } from "vue";
 export const useModalStore = defineStore({ id: "modal" }, () => {
   const isOpen = ref(false);
 
-  const dataModal = ref({});
+  const dataPokemon = ref({});
+
+  const statsPokemon = ref({});
 
   const openModal = (item) => {
-    dataModal.value = item;
+    dataPokemon.value = item;
     isOpen.value = !isOpen.value;
   };
 
@@ -18,6 +20,7 @@ export const useModalStore = defineStore({ id: "modal" }, () => {
     isOpen,
     closeModal,
     openModal,
-    dataModal,
+    dataPokemon,
+    statsPokemon,
   };
 });

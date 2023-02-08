@@ -2,7 +2,7 @@
   <div class="card col-span-6 md:col-span-3">
     <div class="card-header">
       <h4 class="text-subheading-small md:text-subheading-medium">
-        #000{{ pokemon.id }}
+        #{{ pokemon.id }}
       </h4>
       <h2 class="text-heading-small md:text-heading-medium">
         {{ pokemon.name }}

@@ -79,7 +79,11 @@ module.exports = {
           alignItems: "center",
           justifyContent: "center",
         },
-        ".modal": {},
+        ".modal": {
+          padding: "0.5rem",
+          backgroundColor: "#FFFF",
+          boxShadow: "2px 2px 10px 5px rgb(0, 0, 0, 0.025)",
+        },
       });
     },
   ],
