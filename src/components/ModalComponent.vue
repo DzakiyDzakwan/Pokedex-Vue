@@ -15,82 +15,122 @@
               @click="$emit('closeModal')"
             />
           </div>
-          <div class="card-content mt-6 mx-24">
+          <div class="card-content md:mt-6 mx-10 md:mx-24">
             <div class="modal-title text-center">
-              <h4 class="text-subheading-medium">
+              <h4 class="text-subheading-small md:text-subheading-medium">
                 #{{ modal.dataPokemon.id }}
               </h4>
-              <h2 class="text-heading-large">{{ modal.dataPokemon.name }}</h2>
+              <h2 class="text-heading-medium md:text-heading-large">
+                {{ modal.dataPokemon.name }}
+              </h2>
             </div>
-            <div class="modal-image flex items-center justify-center">
+            <div class="flex items-center justify-center">
               <img
-                :src="modal.dataPokemon.sprites.front_default"
+                :src="
+                  modal.isShiny
+                    ? modal.dataPokemon.sprites.front_shiny
+                    : modal.dataPokemon.sprites.front_default
+                "
                 :alt="modal.dataPokemon.name"
-                class="w-[128px] h-[128px]"
+                class="w-[96px] h-[96px] md:w-[128px] md:h-[128px]"
               />
             </div>
-            <div class="flex justify-center items-center py-2">
+            <div class="flex justify-center items-center py-1 md:py-2">
               <div
-                class="bg-red-500 text-white py-1 px-2 rounded-lg text-subheading-medium"
+                :class="`${isDefault} py-1 px-2 rounded-lg text-subheading-small md:text-subheading-medium`"
+                @click="switchDefault"
               >
                 Default
               </div>
               <div
-                class="cursor-pointer py-1 px-2 rounded-lg text-subheading-medium"
+                :class="`${isShiny} py-1 px-2 rounded-lg text-subheading-small md:text-subheading-medium`"
+                @click="switchShiny"
               >
                 Shiny
               </div>
             </div>
 
-            <div class="py-2">
+            <div class="py-1 md:py-2">
               <div class="flex gap-4 mb-1">
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Height</h4>
-                  <p class="text-large">{{ modal.dataPokemon.height }}</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Height
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.height }}
+                  </p>
                 </div>
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Weight</h4>
-                  <p class="text-large">{{ modal.dataPokemon.weight }}</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Weight
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.weight }}
+                  </p>
                 </div>
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Health</h4>
-                  <p class="text-large"></p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Health
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.stats[0].base_stat }}
+                  </p>
                 </div>
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Attack</h4>
-                  <p class="text-large">7</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Attack
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.stats[1].base_stat }}
+                  </p>
                 </div>
               </div>
               <div class="flex gap-4 mt-1">
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Defense</h4>
-                  <p class="text-large">7</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Defense
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.stats[2].base_stat }}
+                  </p>
                 </div>
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Speed</h4>
-                  <p class="text-large">7</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    SpAtk
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.stats[3].base_stat }}
+                  </p>
                 </div>
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">SpAtk</h4>
-                  <p class="text-large">7</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Spdef
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.stats[4].base_stat }}
+                  </p>
                 </div>
                 <div class="text-center">
-                  <h4 class="text-subheading-medium">Spdef</h4>
-                  <p class="text-large">7</p>
+                  <h4 class="text-subheading-small md:text-subheading-medium">
+                    Speed
+                  </h4>
+                  <p class="text-medium md:text-large">
+                    {{ modal.dataPokemon.stats[5].base_stat }}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div class="hidden items-center justify-center gap-1 py-2">
+            <div class="flex items-center justify-center gap-1 py-2">
               <div
-                class="rounded-xl bg-green-500 py-1 px-6 text-subheading-medium text-white"
+                v-for="(pokemon, index) in modal.dataPokemon.types"
+                :key="index"
+                class="rounded-xl py-1 px-6 text-subheading-small md:text-subheading-medium bg-slate-700 text-white"
               >
-                Grass
-              </div>
-              <div
-                class="rounded-xl bg-purple-600 py-1 px-6 text-subheading-medium text-white"
-              >
-                Poison
+                {{
+                  pokemon.type.name[0].toUpperCase() +
+                  pokemon.type.name.slice(1)
+                }}
               </div>
             </div>
           </div>
@@ -110,6 +150,28 @@ export default {
     return {
       modal,
     };
+  },
+  methods: {
+    switchDefault() {
+      if (this.modal.isShiny) this.modal.isShiny = !this.modal.isShiny;
+      console.log("Default");
+    },
+    switchShiny() {
+      if (!this.modal.isShiny) this.modal.isShiny = !this.modal.isShiny;
+      console.log("Shiny");
+    },
+  },
+  computed: {
+    isShiny() {
+      return this.modal.isShiny
+        ? "bg-red-500 text-white"
+        : "cursor-pointer hover:bg-black-200";
+    },
+    isDefault() {
+      return this.modal.isShiny
+        ? "cursor-pointer hover:bg-black-200"
+        : "bg-red-500 text-white";
+    },
   },
 };
 </script>

@@ -36,9 +36,9 @@ const AsyncCard = defineAsyncComponent({
 
 const Modal = defineAsyncComponent({
   loader: () => import("@/components/ModalComponent"),
+  loadingComponent: "",
   delay: 2000,
   timeout: 5000,
-  suspensible: false,
 });
 
 export default {
