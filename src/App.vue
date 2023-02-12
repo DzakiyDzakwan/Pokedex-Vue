@@ -1,11 +1,14 @@
 <template>
   <NavbarComponent />
   <div class="container pt-8 pb-4">
-    <div class="grid grid-cols-12 gap-4 w-fit mx-auto">
-      <template v-for="item in pokemon.pokemons" :key="item.id">
-        <AsyncCard :pokemon="item" @openModal="modal.openModal(item)" />
+    <Suspense>
+      <template #default>
+        <PokemonContainer @openModal="modal.openModal" />
       </template>
-    </div>
+      <template #fallback>
+        <h1 class="text-heading-large text-center">Loading.....</h1>
+      </template>
+    </Suspense>
   </div>
   <div class="container pt-4 pb-8">
     <ButtonComponent
@@ -21,18 +24,9 @@
 import { usePokemonStore } from "@/stores/pokemon.js";
 import { useModalStore } from "@/stores/modal.js";
 import NavbarComponent from "@/components/NavbarComponent";
-import CardLoadingComponent from "@/components/CardLoadingComponent";
+import PokemonContainer from "@/components/PokemonContainer";
 import ButtonComponent from "@/components/ButtonComponent";
 import { defineAsyncComponent } from "vue-demi";
-
-const AsyncCard = defineAsyncComponent({
-  loader: () => import("@/components/CardComponent"),
-  loadingComponent: CardLoadingComponent,
-  errorComponent: "<template>Error</template>",
-  delay: 2000,
-  timeout: 5000,
-  suspensible: false,
-});
 
 const Modal = defineAsyncComponent({
   loader: () => import("@/components/ModalComponent"),
@@ -45,7 +39,7 @@ export default {
   name: "App",
   components: {
     NavbarComponent,
-    AsyncCard,
+    PokemonContainer,
     ButtonComponent,
     Modal,
   },
@@ -63,13 +57,6 @@ export default {
     },
   },
   async mounted() {
-    try {
-      await this.pokemon.getPokemon(
-        "https://pokeapi.co/api/v2/pokemon?limit=8"
-      );
-    } catch (error) {
-      console.log(error);
-    }
     console.log("mounted");
   },
 };
